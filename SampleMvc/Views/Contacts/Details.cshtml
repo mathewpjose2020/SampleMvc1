@@ -1,0 +1,30 @@
+﻿@model SampleMvc.Models.Contacts
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Contacts</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ContactName)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ContactName)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ContactEmail)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ContactEmail)
+    </div>
+
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ContactUserId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

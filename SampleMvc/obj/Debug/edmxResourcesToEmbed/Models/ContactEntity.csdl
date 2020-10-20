@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ContactBookModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ContactBookDb" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Accounts" EntityType="ContactBookModel.Accounts" />
+    <EntitySet Name="Contacts" EntityType="ContactBookModel.Contacts" />
+    <AssociationSet Name="FK_Contacts_Accounts" Association="ContactBookModel.FK_Contacts_Accounts">
+      <End Role="Accounts" EntitySet="Accounts" />
+      <End Role="Contacts" EntitySet="Contacts" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Accounts">
+    <Key>
+      <PropertyRef Name="AccountId" />
+    </Key>
+    <Property Name="AccountId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AccountName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AccountPassword" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="AccountRole" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AccountActive" Type="Boolean" />
+    <NavigationProperty Name="Contacts" Relationship="ContactBookModel.FK_Contacts_Accounts" FromRole="Accounts" ToRole="Contacts" />
+  </EntityType>
+  <EntityType Name="Contacts">
+    <Key>
+      <PropertyRef Name="ContactId" />
+    </Key>
+    <Property Name="ContactId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ContactName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ContactEmail" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ContactActive" Type="Boolean" Nullable="false" />
+    <Property Name="ContactUserId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Accounts" Relationship="ContactBookModel.FK_Contacts_Accounts" FromRole="Contacts" ToRole="Accounts" />
+  </EntityType>
+  <Association Name="FK_Contacts_Accounts">
+    <End Type="ContactBookModel.Accounts" Role="Accounts" Multiplicity="1" />
+    <End Type="ContactBookModel.Contacts" Role="Contacts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Accounts">
+        <PropertyRef Name="AccountId" />
+      </Principal>
+      <Dependent Role="Contacts">
+        <PropertyRef Name="ContactUserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
